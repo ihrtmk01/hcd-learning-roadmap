@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HCD資格 学習ロードマップ</title>
+  <title>HCD資格 学習ロードマップ + UX実践ガイド</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
@@ -73,6 +73,9 @@
     .badge-green { background: #dcfce7; color: #166534; }
     .badge-gray { background: #f3f4f6; color: #4b5563; }
     .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-orange { background: #fed7aa; color: #92400e; }
+    .badge-indigo { background: #e0e7ff; color: #3730a3; }
 
     /* ── Card ── */
     .card { background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
@@ -100,7 +103,56 @@
     /* ── Dot ── */
     .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
+    /* ── UX Practice Guide Styles ── */
+    .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .2s; }
+    .filter-btn:hover { border-color: #9ca3af; background: #f9fafb; }
+    .filter-btn.active { background: #1f2937; color: #fff; border-color: #1f2937; }
+
+    .phase-timeline { display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .phase-block { flex: 1; padding: 14px 12px; color: #fff; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
+    .phase-block:hover { opacity: 0.9; transform: translateY(-2px); }
+    .phase-block-title { font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+    .phase-block-time { font-size: 11px; opacity: 0.85; }
+
+    .phase-detail { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+    .phase-detail h3 { font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; }
+    .phase-detail-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .phase-step { padding: 8px 12px; background: #fff; border-radius: 6px; border-left: 3px solid #d1d5db; font-size: 12px; }
+    .phase-step strong { display: block; margin-bottom: 2px; color: #111827; }
+    .phase-step-desc { color: #6b7280; font-size: 11px; }
+
+    .method-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 8px; transition: all .2s; }
+    .method-card:hover { border-color: #93c5fd; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+    .method-num-badge { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .method-header { display: flex; gap: 12px; align-items: flex-start; }
+    .method-body { flex: 1; }
+    .method-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; color: #111827; }
+    .method-name-en { font-size: 11px; color: #9ca3af; font-weight: 400; margin-left: 6px; }
+    .method-desc { font-size: 12px; color: #6b7280; margin-bottom: 6px; line-height: 1.4; }
+    .method-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .tag { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; }
+    .tag-hcd { background: #fee2e2; color: #991b1b; }
+    .tag-dt { background: #dcfce7; color: #166534; }
+    .tag-lean { background: #fed7aa; color: #92400e; }
+    .tag-agile { background: #dbeafe; color: #1e40af; }
+    .tag-service { background: #f3e5f5; color: #6b21b6; }
+    .tag-tem { background: #fce4ec; color: #c62828; }
+    .tag-phase { background: #ede9fe; color: #6d28d9; }
+    .tag-time { background: #f3f4f6; color: #4b5563; }
+    .tag-difficulty { background: #fef3c7; color: #92400e; }
+    .tag-output { background: #dcfce7; color: #166534; }
+
+    .method-categories { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .category-section { margin-bottom: 24px; }
+    .category-header { font-size: 15px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e7eb; display: flex; align-items: center; gap: 8px; color: #111827; }
+    .category-icon { font-size: 18px; }
+    .category-count { font-size: 12px; color: #9ca3af; margin-left: auto; }
+
     /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .phase-detail-steps { grid-template-columns: 1fr; }
+    }
     @media (max-width: 600px) {
       .hide-mobile { display: none; }
     }
@@ -115,7 +167,7 @@
     // ─── Data ───────────────────────────────────────────────────
     const TRACKS = {
       basic: {
-        id: "basic", label: "HCD基礎検定", subtitle: "HCD検\u00AE",
+        id: "basic", label: "HCD基礎検定", subtitle: "HCD検®",
         description: "人間中心デザインの基礎知識を問う検定試験。年3回実施、50問50分。",
         color: "#2563eb",
       },
@@ -278,9 +330,115 @@
       ],
     };
 
+    // UX Process Phases
+    const UX_PHASES = [
+      { id:'discovery', num:1, name:'Discovery', label:'ユーザー理解・課題発見', time:'1週間', color:'#6366f1',
+        steps:['ユーザーインタビュー (5名以上)','コンテキスチュアル・インクワイアリー','エスノグラフィー調査','ペルソナ作成','ユーザーニーズ整理'],
+        outputs:['インタビューノート','ペルソナドキュメント','ニーズ/ペインポイントリスト'],
+        tips:'1時間のリサーチは10時間のデザイン修正を防ぐ。Discoveryをスキップしない。',
+      },
+      { id:'define', num:2, name:'Define', label:'定義・構造化', time:'1週間', color:'#8b5cf6',
+        steps:['ユーザーフロー/タスクフロー作成','情報アーキテクチャ(IA)設計','画面一覧×データマッピング','情報優先度定義','ジャーニーマップ作成'],
+        outputs:['ユーザーフロー図','情報アーキテクチャ','カスタマージャーニーマップ'],
+        tips:'IAを曖昧にしたままワイヤーフレームに進むと破綻する。特に複数エンティティを扱う場合は最初にチームで合意。',
+      },
+      { id:'ideate', num:3, name:'Ideate', label:'発散・構造スケッチ', time:'1週間', color:'#3b82f6',
+        steps:['ペーパースケッチ / Crazy 8s','Lo-fi ワイヤーフレーム','デザインレビュー(社内)','インタラクション定義(ドラフト)'],
+        outputs:['Lo-fi ワイヤーフレーム (2-3案)','インタラクション注釈つきワイア'],
+        tips:'この段階ではビジュアルの質より量と多様性が重要。複数案を素早く出す。',
+      },
+      { id:'design', num:4, name:'Design', label:'UIデザイン・プロトタイプ', time:'2-4週間', color:'#0ea5e9',
+        steps:['デザインシステム確認/構築','Hi-fi ビジュアルデザイン','インタラクション仕様書作成','プロトタイプ制作','デザインハンドオフ準備'],
+        outputs:['デザインシステム/UIキット','Hi-fi プロトタイプ','インタラクション仕様書'],
+        tips:'最も時間をかけるフェーズ。ビジュアルの一貫性を保つため、デザインシステムを最初に構築。',
+      },
+      { id:'test', num:5, name:'Test', label:'ユーザビリティ評価', time:'1-2週間', color:'#22c55e',
+        steps:['テスト計画・シナリオ作成','ユーザビリティテスト実施 (5-8名)','フィードバック分析','改善案検討','デザイン修正'],
+        outputs:['ユーザビリティテスト報告書','フィードバック分析表','デザイン修正案'],
+        tips:'本番前に最低5-8名のユーザーでテスト。発見事項に優先度をつけて対応。',
+      },
+      { id:'handoff', num:6, name:'Handoff', label:'エンジニア連携・成果物納品', time:'1週間', color:'#f97316',
+        steps:['最終デザイン確認','スペック書/CSS仕様作成','エンジニアとの仕様書レビュー','デザインアセット準備','構築後のレビュー・QA'],
+        outputs:['最終デザイン成果物','デザイン仕様書','デザインアセット/CSS変数'],
+        tips:'エンジニアとの円滑な連携のため、Figmaで整理されたコンポーネント・変数構造が重要。',
+      },
+    ];
+
+    // All 67 UX Methods
+    const UX_METHODS = [
+      {num:1,name_jp:'コンテキスチュアル・インクワイアリー',name_en:'Contextual Inquiry',desc:'ユーザーの実際の作業環境に出向き、業務を観察しながらインタビューする。机上のインタビューでは見えない暗黙知や回避行動を発見できる。',tags:['HCD','デザイン思考','Discovery','1日/人','中','観察ノート、As-Isフロー']},
+      {num:2,name_jp:'デプスインタビュー',name_en:'Depth Interview',desc:'1対1の半構造化インタビュー。JTBD（片付けるべき仕事）やThe Mom Test原則に基づき、過去の行動事実を聞き出す。5～8名で主要パターンを網羅。',tags:['HCD','デザイン思考','リーンUX','Discovery','45分/人','低','インタビューノート']},
+      {num:3,name_jp:'エスノグラフィー調査',name_en:'Ethnographic Research',desc:'数日～数週間にわたりユーザーの生活・業務環境に入り込んで観察する。長期的な行動パターンや文化的背景を理解するための質的調査。',tags:['デザイン思考','Discovery','1～4週間','高','フィールドノート、写真、動画']},
+      {num:4,name_jp:'アンケート / サーベイ',name_en:'Survey',desc:'大量のユーザーから定量データを収集。NPS、SUS（System Usability Scale）、PMFサーベイ等の標準フォーマットがある。',tags:['HCD','リーンUX','アジャイル','Discovery / Test','1～2週間','低','統計データ、グラフ']},
+      {num:5,name_jp:'ダイアリースタディ',name_en:'Diary Study',desc:'ユーザーに日記を記録させ、時系列での行動や気づきを収集する。日常的で長期的な行動パターンを理解できる。',tags:['HCD','Discovery','1～4週間','中','日記データ、パターン分析']},
+      {num:6,name_jp:'ソーシャルリスニング',name_en:'Social Listening',desc:'SNS・レビュー・フォーラムでの自社/競合製品に関する会話をモニター。ユーザーの本当の声とトレンドを把握できる。',tags:['リーンUX','アジャイル','Discovery','継続的','低','テーマ分析、言及量グラフ']},
+      {num:7,name_jp:'アクセスログ / ヒートマップ分析',name_en:'Heatmap Analysis',desc:'Google Analytics、Hotjar等でユーザーの行動軌跡を可視化。どこがクリックされ、どこが離脱するかを定量把握。',tags:['HCD','リーンUX','アジャイル','Discovery / Test','1日','低','ヒートマップ、グラフ']},
+      {num:8,name_jp:'サイコグラフィック分析',name_en:'Psychographic Segmentation',desc:'ユーザーの価値観・ライフスタイル・人格特性に基づくセグメンテーション。デモグラフィックより深い理解ができる。',tags:['リーンUX','Discovery','2週間','中','セグメント定義表']},
+      {num:9,name_jp:'コンテンツ分析',name_en:'Content Analysis',desc:'ユーザー生成コンテンツ（レビュー、投稿、チャット）を定性分析。言語パターン、感情、ニーズを抽出。',tags:['HCD','Discovery','1～2週間','中','テーマリスト、引用集']},
+      {num:10,name_jp:'フォーカスグループ',name_en:'Focus Group',desc:'複数ユーザーをまとめてグループインタビュー。相互作用による新しい気づきが生まれやすい。ただし実施にはスキルが必要。',tags:['HCD','デザイン思考','Discovery','2時間','高','グループノート、動画']},
+      {num:11,name_jp:'スピードデーティング / ユーザーテスト',name_en:'Speed Dating',desc:'複数のプロトタイプまたはコンセプトを素早くテスト。ユーザーの即座の反応で有望なアイデアを絞り込む。',tags:['デザイン思考','リーンUX','Discovery / Ideate','30分/人','中','投票結果、コメント']},
+      {num:12,name_jp:'コンシェルジュテスト',name_en:'Concierge Test',desc:'サービスを手作業で提供し、ユーザーが本当に望むのか、どの機能が重要かを検証。MVP検証に最適。',tags:['HCD','デザイン思考','リーンUX','Discovery / Test','1～2週間','低','実行ログ、ユーザーフィードバック']},
+      {num:13,name_jp:'競合分析 / ベンチマーキング',name_en:'Competitive Analysis',desc:'競合製品のUI/UX、機能、価値提案を体系的に調査。自社の位置付けと改善機会を特定。',tags:['HCD','デザイン思考','リーンUX','Discovery','3～5日','低','比較表、SWOT分析']},
+      {num:14,name_jp:'ユーザーテスト予備調査',name_en:'Usability Testing',desc:'プロトタイプをユーザーに提示し、操作可能性と直感性を評価。「できるはず」と「実際に使える」のギャップ発見。',tags:['HCD','デザイン思考','リーンUX','Test','1時間/人','低','テスト記録、コメント集']},
+      {num:15,name_jp:'ペルソナ',name_en:'Persona',desc:'ユーザー調査に基づく典型的なユーザー像。背景・ニーズ・ゴール・行動パターンを仮想人物として記述。全体の設計判断軸になる。',tags:['HCD','デザイン思考','Define','1～2日','低','ペルソナドキュメント']},
+      {num:16,name_jp:'カスタマージャーニーマップ',name_en:'Customer Journey Map',desc:'ユーザーの全接触ポイント（タッチポイント）での行動・思考・感情・痛点・機会を時系列で可視化。全体最適化の俯瞰図。',tags:['HCD','デザイン思考','TEM','Define','2～3日','中','マップ（FigJam/Miro）']},
+      {num:17,name_jp:'エクスペリエンスマップ / サービスブループリント',name_en:'Service Blueprint',desc:'カスタマージャーニーマップを拡張。バックステージの仕組み・プロセス・システムも含めて可視化。サービス全体の設計に必須。',tags:['HCD','サービスデザイン','TEM','Define','2～3日','高','ブループリント（Figma/Miro）']},
+      {num:18,name_jp:'タスク分析 / HTA',name_en:'Hierarchical Task Analysis',desc:'ユーザーの目標を細粒度のタスク・サブタスクに階層分解。各段階での意思決定ポイントを明確化。複雑なワークフロー設計に有効。',tags:['HCD','Define','2～3日','中','タスク階層図']},
+      {num:19,name_jp:'ユーザーフロー / タスクフロー',name_en:'User Flow / Task Flow',desc:'ユーザーがゴール到達までのステップを図示。分岐、条件、エラーケースを含む。ワイヤーフレーム前に構造を決める。',tags:['HCD','デザイン思考','Define','2～3日','低','フロー図（Figma/FigJam）']},
+      {num:20,name_jp:'情報アーキテクチャ（IA）',name_en:'Information Architecture',desc:'サイト/アプリの情報を階層的に組織化。ナビゲーション構造、カテゴリ分け、検索性を設計。UIの基礎となる。',tags:['HCD','デザイン思考','Define','3～5日','中','サイトマップ、IA図']},
+      {num:21,name_jp:'メンタルモデル分析',name_en:'Mental Model Analysis',desc:'ユーザーが製品についてどう理解・認識しているかを可視化。設計者の「正しい論理」とユーザーの「期待」のズレを発見。',tags:['HCD','Define','2～3日','高','メンタルモデル図']},
+      {num:22,name_jp:'オブザーベーション / ビデオ分析',name_en:'Observational Study',desc:'ユーザーの行動を直接観察または動画で記録分析。言語化されない行動や文脈を理解。',tags:['HCD','デザイン思考','Define','1～2週間','中','観察ノート、ビデオ']},
+      {num:23,name_jp:'コンテンツインベントリ / 監査',name_en:'Content Audit',desc:'既存コンテンツ全体を把握するため、全ページ/項目をリスト化し、品質・関連性・重複を評価。リニューアルに必須。',tags:['HCD','Define','1～2週間','低','スプレッドシート監査表']},
+      {num:24,name_jp:'KPI・メトリクス定義',name_en:'KPI Definition',desc:'ビジネス目標と連動したKPI（北極星メトリクス）を定義。何を成功とするかを定量的に決める。',tags:['HCD','リーンUX','Define','1～2日','中','KPI定義表']},
+      {num:25,name_jp:'ストーリーボード',name_en:'Storyboard',desc:'ユーザーのシナリオを漫画のように視覚的に描く。感情や文脈を含めた理解を共有できる。',tags:['HCD','デザイン思考','Define','1～2日','低','スケッチ、Figma']},
+      {num:26,name_jp:'ブレインストーミング',name_en:'Brainstorming',desc:'判断を一時的に保留し、質より量を重視してアイデアを出す。階層や立場を越えた参加が重要。',tags:['HCD','デザイン思考','Ideate','1～2時間','低','アイデア一覧']},
+      {num:27,name_jp:'スキャムパー法',name_en:'SCAMPER Method',desc:'SCAMPER（Replace, Combine, Adapt等）の7つのフレームを使い、既存製品をシステマティックに改善案を引き出す。',tags:['デザイン思考','Ideate','1～2時間','中','スキャンパーシート']},
+      {num:28,name_jp:'6つの帽子思考法',name_en:'Six Thinking Hats',desc:'6色の帽子で思考の視点を切り替え。客観的、感情的、批判的、肯定的など複数角度からアイデアを検討。',tags:['デザイン思考','Ideate','1～2時間','中','マインドマップ']},
+      {num:29,name_jp:'プロトペルソナで共創ワークショップ',name_en:'Co-creation Workshop',desc:'ユーザー・デザイナー・ステークホルダーが一堂に会し、ペルソナに対する価値提案を共同で発想。参加者の意思決定と納得感が高まる。',tags:['HCD','デザイン思考','Ideate','半日','中','アイデア、投票結果']},
+      {num:30,name_jp:'ペインポイント→チャンスマップ',name_en:'Pain Point to Opportunity Mapping',desc:'ユーザーの痛点を整理し、それぞれに対する解決策（チャンス）を提案。ニーズ駆動の発想になる。',tags:['デザイン思考','Ideate','1～2日','低','マップシート']},
+      {num:31,name_jp:'クレイジー8s / ラピッドスケッチング',name_en:'Crazy Eights',desc:'8分で8つの異なるレイアウト案を手書き。発散思考を促し、単一案思考を打破。',tags:['デザイン思考','Ideate','8分','低','スケッチ']},
+      {num:32,name_jp:'デザインスプリント',name_en:'Design Sprint',desc:'5日間で課題定義→発散→決定→プロトタイプ→テストを実行。アジャイル設計の代表的フレーム。',tags:['デザイン思考','リーンUX','Ideate～Test','5日','高','プロトタイプ、テスト結果']},
+      {num:33,name_jp:'マインドマップ',name_en:'Mind Mapping',desc:'中心テーマから放射状に関連概念を広げる。構造化された発散思考が得られ、全体像把握に有効。',tags:['デザイン思考','Ideate','1時間','低','マインドマップ（Miro/XMind）']},
+      {num:34,name_jp:'コンセプトスケッチ / コンセプトテスト',name_en:'Concept Sketch',desc:'複数の解決案をラフに描き、ユーザーの評価・投票で有望なコンセプトを選別。早期段階での検証が有効。',tags:['HCD','デザイン思考','Ideate','1～2日','低','スケッチ、投票結果']},
+      {num:35,name_jp:'ペルソナベースのシナリオ作成',name_en:'Scenario Writing',desc:'ペルソナとジャーニーマップに基づき「特定ユーザーがどう使うか」を物語形式で記述。UXシナリオ設計の羅針盤。',tags:['HCD','Ideate','2～3日','中','シナリオドキュメント']},
+      {num:36,name_jp:'ローファイプロトタイプ / ワイヤーフレーム',name_en:'Lo-Fi Wireframe',desc:'グレーボックスで構造と配置に集中。色やフォントは不要。複数案の比較検討に最適。',tags:['HCD','デザイン思考','Ideate / Design','3～5日','低','Figma/Balsamiq ファイル']},
+      {num:37,name_jp:'ペーパープロトタイプ',name_en:'Paper Prototype',desc:'紙とペンで画面遷移を実装。超低コスト・低時間で試験的テストができる。ユーザーテスト初期段階に有効。',tags:['デザイン思考','Design','半日～1日','低','紙プロトタイプ、テスト動画']},
+      {num:38,name_jp:'インタラクティブプロトタイプ（ミドルファイ）',name_en:'Mid-Fi Prototype',desc:'FigmaやProtoPieでクリック可能にしたプロトタイプ。実装前のユーザビリティテストに最適。',tags:['HCD','デザイン思考','リーンUX','Design','5～10日','中','FigmaプロトタイプURL']},
+      {num:39,name_jp:'ハイファイプロトタイプ / ビジュアルデザイン',name_en:'Hi-Fi Prototype',desc:'最終デザインに近いビジュアル品質。本格的なユーザテストやステークホルダー説得に活用。',tags:['HCD','デザイン思考','Design','2～4週間','高','Figmaファイル、プロトタイプ']},
+      {num:40,name_jp:'MVPプロトタイプ',name_en:'MVP Prototype',desc:'最小限の実装でコア機能のみを実装したプロトタイプ。仮説検証を素早く回すのに有効。',tags:['リーンUX','Design','1～2週間','中','実装コード、デモ']},
+      {num:41,name_jp:'デザインシステム / UIキット構築',name_en:'Design System',desc:'コンポーネント、色、タイポグラフィ、インタラクション等の統一ガイド。スケール時に必須。',tags:['HCD','デザイン思考','Design','2～4週間','高','Figmaコンポーネント、ドキュメント']},
+      {num:42,name_jp:'デザイン言語 / ビジュアルスタイルガイド',name_en:'Design Language / Style Guide',desc:'ブランドアイデンティティを反映したビジュアルルール。配色、フォント、アイコン、トーン&マナー等を定義。',tags:['デザイン思考','Design','1～2週間','中','スタイルガイド（Figma/PDF）']},
+      {num:43,name_jp:'アクセシビリティ設計（WCAG準拠）',name_en:'Accessibility Design',desc:'WCAG 2.1に準拠したアクセシブルUI設計。色覚多様性、スクリーンリーダー対応等を組み込む。',tags:['HCD','Design','継続的','中','コントラスト比報告、ALT文']},
+      {num:44,name_jp:'ユーザビリティテスト（定性）',name_en:'Usability Testing',desc:'5～8名のユーザーに実際にタスク遂行を依頼。操作可能性、理解度、満足度を評価。最も簡単で効果的な検証方法。',tags:['HCD','デザイン思考','Test','1時間/人','低','テスト記録、分析報告書']},
+      {num:45,name_jp:'リモートユーザビリティテスト',name_en:'Remote Usability Testing',desc:'ユーザーがリモート環境でタスク遂行。低コスト・地理的制限がない。ツール: UserTesting, Maze等。',tags:['HCD','Test','1～2週間','低','テスト動画URL、分析報告書']},
+      {num:46,name_jp:'A/Bテスト（分割テスト）',name_en:'A/B Testing',desc:'2つのバージョンをランダムに提示し、統計的に有意な差を検証。数値化された改善判断ができる。',tags:['HCD','リーンUX','アジャイル','Test','1～4週間','中','テスト結果、統計分析']},
+      {num:47,name_jp:'マルチバリエートテスト（多変量テスト）',name_en:'Multivariate Testing',desc:'A/Bテストの拡張版。複数の要素を同時にテスト。A/Bテストより効率的。',tags:['リーンUX','Test','2～8週間','高','テスト結果、統計分析']},
+      {num:48,name_jp:'ヒートマップ / セッションリプレイ分析',name_en:'Heatmap & Session Replay',desc:'Hotjar等でクリック、スクロール、マウス動きを可視化。ユーザーの行動パターンを定量的に把握。',tags:['HCD','リーンUX','Test','継続的','低','ヒートマップ、セッション動画']},
+      {num:49,name_jp:'NPS / CSAT / CESサーベイ',name_en:'NPS Survey',desc:'標準化された顧客満足度メトリクス。NPS（推奨度）、CSAT（満足度）、CES（解決容易度）を定期計測。',tags:['HCD','リーンUX','Test','1～2週間','低','グラフ、分析レポート']},
+      {num:50,name_jp:'ベータテスト / アーリーアダプター検証',name_en:'Beta Testing',desc:'実際のターゲットユーザーに限定リリース。フィードバック収集と改善を繰り返す。本番前の最終検証。',tags:['HCD','Test','2～4週間','中','バグ報告書、満足度データ']},
+      {num:51,name_jp:'フォーカスグループテスト（デザイン段階）',name_en:'Design Focus Group',desc:'デザイン案をグループで評価。コンセプト受容性や感情的反応をグループダイナミクスで引き出す。',tags:['HCD','デザイン思考','Test','2時間','高','グループノート、動画']},
+      {num:52,name_jp:'アイアイテスト / セカンダリアイアイ',name_en:'First-Click Test',desc:'ユーザーが「次は何をするか」の最初のアクションを観察。情報アーキテクチャやナビゲーションの妥当性を即座に検証。',tags:['デザイン思考','Test','30分/人','低','クリックヒート、分析グラフ']},
+      {num:53,name_jp:'ユーザー調査フォローアップ（Post-Launch）',name_en:'Post-Launch Interview',desc:'本番後、実際にユーザーが使った経験をインタビュー。期待と現実のギャップ、新しいニーズを把握。',tags:['HCD','Test','1時間/人','低','インタビューノート、分析']},
+      {num:54,name_jp:'デザインシステムドキュメント',name_en:'Design System Documentation',desc:'コンポーネント、パターン、ガイドラインの網羅的ドキュメント。ブランド一貫性とスケーラビリティを実現。',tags:['Design','2～4週間','中','Figma / Storybook / Notion']},
+      {num:55,name_jp:'ビジュアルチェックリスト / QA',name_en:'Visual QA Checklist',desc:'デザイン仕様書に基づき、開発版が正確に実装されているかをチェック。ブランド一貫性を保証。',tags:['Design','3～5日','低','チェックリスト、スクリーンショット比較']},
+      {num:56,name_jp:'レスポンシブデザイン検証',name_en:'Responsive Design Testing',desc:'デスクトップ、タブレット、スマートフォンでの表示・操作を検証。複数デバイス対応の品質確保。',tags:['Design','2～3日','低','スクリーンショット、報告書']},
+      {num:57,name_jp:'カラーアクセシビリティ検証',name_en:'Color Accessibility Check',desc:'WCAG準拠のコントラスト比確認。色覚多様性対応も含める。Webaim、Contrast Ratioツール等で検証。',tags:['Design','1日','低','コントラスト比レポート']},
+      {num:58,name_jp:'タイポグラフィガイドライン',name_en:'Typography Guidelines',desc:'フォント、サイズ、行間、色のルール。可読性と美しさの両立。Webフォント最適化も含む。',tags:['Design','3～5日','中','タイポスケール、ガイド']},
+      {num:59,name_jp:'インタラクションパターンライブラリ',name_en:'Interaction Pattern Library',desc:'ボタン、フォーム、ナビゲーション等の再利用パターン。コンポーネント化で開発効率向上。',tags:['デザイン思考','Design','1～2週間','中','Figmaコンポーネント、ドキュメント']},
+      {num:60,name_jp:'OKR / ゴール定義',name_en:'OKR Setting',desc:'プロダクトの四半期ゴール定義。Objective（定性的目標）+ Key Results（定量的成果）で測定可能にする。',tags:['UX戦略','1～2日','中','OKR文書']},
+      {num:61,name_jp:'UXメトリクスダッシュボード構築',name_en:'UX Metrics Dashboard',desc:'KPI（北極星メトリクス）、コンバージョンレート、リテンション等を一元管理。意思決定基盤に。',tags:['UX戦略','リーンUX','アジャイル','2～4週間','中','ダッシュボード（Data Studio / Tableau）']},
+      {num:62,name_jp:'ポストローンチレビュー / レトロスペクティブ',name_en:'Post-Launch Review',desc:'リリース後、目標達成度・学習・改善点を整理。次プロジェクトへの知見蓄積。',tags:['UX戦略','アジャイル','2～3日','低','レビュー報告書']},
+      {num:63,name_jp:'プロダクト分析 / コホート分析',name_en:'Product Analytics',desc:'ユーザーセグメント（コホート）別の行動変化を追跡。施策の効果を各セグメントで検証。',tags:['UX戦略','リーンUX','アジャイル','継続的','高','コホート分析レポート']},
+      {num:64,name_jp:'ファネル分析 / コンバージョン最適化',name_en:'Funnel Analysis',desc:'認知→検討→購入等の各ステップでの離脱率を可視化。ボトルネックを特定し改善。',tags:['UX戦略','リーンUX','継続的','中','ファネルグラフ、改善提案']},
+      {num:65,name_jp:'サービスジャーニー最適化 / オムニチャネルUX',name_en:'Omnichannel Journey Optimization',desc:'オンライン・オフラインの複数タッチポイントを統合したジャーニー設計。接客品質の均一化。',tags:['サービスデザイン','TEM','2～4週間','高','ジャーニーマップ、プロセス図']},
+      {num:66,name_jp:'カスタマーサポート統合設計',name_en:'Support Integration Design',desc:'チャット、FAQ、コミュニティ等のサポートチャネルを統合設計。ユーザーの問題解決をシームレスに。',tags:['サービスデザイン','2週間','中','フロー図、ガイドライン']},
+      {num:67,name_jp:'ロイヤルティプログラム設計',name_en:'Loyalty Program Design',desc:'リピート購買・LTV向上を目的とした施策設計。ポイント、ランク、リワード等の組み合わせ。',tags:['サービスデザイン','2～4週間','中','プログラム仕様書、シミュレーション']},
+    ];
+
     const STORAGE_KEY = "hcd-roadmap-progress";
 
-    // ─── Helper: ProgressRing ───────────────────────────────────
+    // ─── Components ───────────────────────────────────────────────────
+
     function ProgressRing({ percent, size = 48, stroke = 4, color = "#2563eb" }) {
       const r = (size - stroke) / 2;
       const circ = 2 * Math.PI * r;
@@ -291,20 +449,15 @@
           <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
             strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
             style={{ transition: "stroke-dashoffset 0.5s ease" }} />
-          <text x={size/2} y={size/2} textAnchor="middle" dominantBaseline="central"
-            style={{ transform:"rotate(90deg)", transformOrigin:"center", fontSize:size*0.26, fontWeight:700, fill:"#374151" }}>
-            {percent}%
-          </text>
         </svg>
       );
     }
 
-    // ─── Helper: Badge ──────────────────────────────────────────
     function Badge({ children, variant = "gray" }) {
-      return <span className={`badge badge-${variant}`}>{children}</span>;
+      const classes = { blue: 'badge-blue', purple: 'badge-purple', green: 'badge-green', gray: 'badge-gray', amber: 'badge-amber', red: 'badge-red', };
+      return <span className={`badge ${classes[variant] || 'badge-gray'}`}>{children}</span>;
     }
 
-    // ─── Helper: Chevron SVG ────────────────────────────────────
     function Chevron({ open }) {
       return (
         <svg className={`chevron${open ? " chevron-open" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -322,6 +475,7 @@
     }
 
     // ─── Main App ───────────────────────────────────────────────
+
     function App() {
       const [activeTrack, setActiveTrack] = useState("basic");
       const [completed, setCompleted] = useState(() => {
@@ -329,6 +483,8 @@
       });
       const [expandedModule, setExpandedModule] = useState(null);
       const [view, setView] = useState("roadmap");
+      const [expandedPhase, setExpandedPhase] = useState(null);
+      const [filterTag, setFilterTag] = useState(null);
 
       useEffect(() => {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(completed)); } catch {}
@@ -378,7 +534,6 @@
         return cats;
       }, [modules]);
 
-      // ── Timeline data ──
       const basicTimeline = [
         {week:"Week 1-2",label:"理念とマインドセット",modules:["b1","b2"],color:"#2563eb"},
         {week:"Week 3-4",label:"HCDプロセスの計画",modules:["b3"],color:"#2563eb"},
@@ -398,12 +553,54 @@
         {month:"Month 6",label:"記述書の推敲 & 提出準備",modules:["e8"],color:"#16a34a"},
       ];
 
-      function phasePercent(phaseModuleIds) {
+      const filteredMethods = useMemo(() => {
+        if (!filterTag) return UX_METHODS;
+        return UX_METHODS.filter(m => m.tags.includes(filterTag));
+      }, [filterTag]);
+
+      const methodsByCategory = useMemo(() => {
+        const grouped = {
+          '1. リサーチ・調査': [],
+          '2. モデリング・構造化': [],
+          '3. アイデア発想・共創': [],
+          '4. プロトタイピング': [],
+          '5. テスト・評価': [],
+          '6. デザインシステム・ビジュアル': [],
+          '7. UX戦略・計測': [],
+          '8. サービスデザイン固有': [],
+        };
+        filteredMethods.forEach(m => {
+          if (m.num <= 14) grouped['1. リサーチ・調査'].push(m);
+          else if (m.num <= 25) grouped['2. モデリング・構造化'].push(m);
+          else if (m.num <= 35) grouped['3. アイデア発想・共創'].push(m);
+          else if (m.num <= 43) grouped['4. プロトタイピング'].push(m);
+          else if (m.num <= 53) grouped['5. テスト・評価'].push(m);
+          else if (m.num <= 59) grouped['6. デザインシステム・ビジュアル'].push(m);
+          else if (m.num <= 64) grouped['7. UX戦略・計測'].push(m);
+          else grouped['8. サービスデザイン固有'].push(m);
+        });
+        return grouped;
+      }, [filteredMethods]);
+
+      const getTagClass = (tag) => {
+        if (tag === 'HCD') return 'tag-hcd';
+        if (tag === 'デザイン思考') return 'tag-dt';
+        if (tag === 'リーンUX') return 'tag-lean';
+        if (tag === 'アジャイル') return 'tag-agile';
+        if (tag === 'サービスデザイン') return 'tag-service';
+        if (tag === 'TEM' || tag === 'TEM / 体験マッピング') return 'tag-tem';
+        if (tag.includes('Discovery') || tag.includes('Define') || tag.includes('Ideate') || tag.includes('Design') || tag.includes('Test') || tag.includes('Handoff')) return 'tag-phase';
+        if (tag.includes('日') || tag.includes('時間') || tag.includes('週') || tag.includes('月')) return 'tag-time';
+        if (tag === '低' || tag === '中' || tag === '高') return 'tag-difficulty';
+        return 'tag-output';
+      };
+
+      const phasePercent = (phaseModuleIds) => {
         const pm = modules.filter(m => phaseModuleIds.includes(m.id));
         const t = pm.reduce((s,m) => s + m.topics.length, 0);
         const d = pm.reduce((s,m) => s + m.topics.filter((_,j) => completed[`${m.id}-${j}`]).length, 0);
         return t ? Math.round(d/t*100) : 0;
-      }
+      };
 
       return (
         <div style={{minHeight:"100vh"}} className="bg-gray-50">
@@ -421,8 +618,7 @@
                 <div className="flex items-center gap-2">
                   <ProgressRing percent={overallProgress.pct} size={44} color={track.color} />
                   <div className="text-xs text-gray-500 leading-tight">
-                    {overallProgress.done}/{overallProgress.total} 項目<br/>
-                    約{Math.round(completedHours)}h / {totalHours}h
+                    {overallProgress.done}/{overallProgress.total} 項目<br/>約{Math.round(completedHours)}h / {totalHours}h
                   </div>
                 </div>
               </div>
@@ -467,13 +663,147 @@
 
             {/* View Tabs */}
             <div className="flex gap-1 mb-4 rounded-lg p-1 bg-gray-100">
-              {[{id:"roadmap",label:"ロードマップ"},{id:"resources",label:"参考リソース"},{id:"timeline",label:"学習計画"}].map(v => (
+              {[{id:"roadmap",label:"ロードマップ"},{id:"resources",label:"参考リソース"},{id:"timeline",label:"学習計画"},{id:"ux-guide",label:"UX実践ガイド"}].map(v => (
                 <button key={v.id} onClick={() => setView(v.id)}
                   className={`btn-tab ${view===v.id ? "btn-tab-active" : "btn-tab-inactive"}`}>
                   {v.label}
                 </button>
               ))}
             </div>
+
+            {/* ── UX Practice Guide ── */}
+            {view === "ux-guide" && (
+              <div>
+                {/* Phase Timeline */}
+                <div className="mb-6">
+                  <h2 className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">UXプロセスフロー</h2>
+                  <div className="phase-timeline mb-4">
+                    {UX_PHASES.map(phase => (
+                      <button key={phase.id}
+                        className="phase-block"
+                        style={{background: phase.color}}
+                        onClick={() => setExpandedPhase(expandedPhase === phase.id ? null : phase.id)}>
+                        <div className="phase-block-title">{phase.num}. {phase.name}</div>
+                        <div className="phase-block-time">{phase.time}</div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Phase Details */}
+                  {expandedPhase && (
+                    <div className="phase-detail">
+                      {UX_PHASES.map(phase =>
+                        expandedPhase === phase.id ? (
+                          <div key={phase.id}>
+                            <h3 style={{color: phase.color, marginBottom: 16}}>PHASE {phase.num}: {phase.label}</h3>
+
+                            <div style={{marginBottom: 16}}>
+                              <h4 className="text-xs font-semibold text-gray-600 uppercase mb-2">やること</h4>
+                              <div className="phase-detail-steps">
+                                {phase.steps.map((step, i) => (
+                                  <div key={i} className="phase-step">
+                                    <strong>{step}</strong>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div style={{marginBottom: 16}}>
+                              <h4 className="text-xs font-semibold text-gray-600 uppercase mb-2">成果物</h4>
+                              <div className="flex gap-2 flex-wrap">
+                                {phase.outputs.map((output, i) => (
+                                  <Badge key={i} variant="blue">{output}</Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div>
+                              <h4 className="text-xs font-semibold text-gray-600 uppercase mb-2">💡 Tips</h4>
+                              <p className="text-sm text-gray-600">{phase.tips}</p>
+                            </div>
+                          </div>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Filter Buttons */}
+                <div>
+                  <h2 className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-3">UX手法カタログ ({filteredMethods.length}手法)</h2>
+                  <div className="filter-buttons">
+                    <button className={`filter-btn ${!filterTag ? 'active' : ''}`} onClick={() => setFilterTag(null)}>
+                      全て ({UX_METHODS.length})
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'HCD' ? 'active' : ''}`} onClick={() => setFilterTag('HCD')}>
+                      HCD
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'デザイン思考' ? 'active' : ''}`} onClick={() => setFilterTag('デザイン思考')}>
+                      デザイン思考
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'リーンUX' ? 'active' : ''}`} onClick={() => setFilterTag('リーンUX')}>
+                      リーンUX
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'アジャイル' ? 'active' : ''}`} onClick={() => setFilterTag('アジャイル')}>
+                      アジャイル
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'サービスデザイン' ? 'active' : ''}`} onClick={() => setFilterTag('サービスデザイン')}>
+                      サービスデザイン
+                    </button>
+                    <button className={`filter-btn ${filterTag === 'TEM' ? 'active' : ''}`} onClick={() => setFilterTag('TEM')}>
+                      TEM
+                    </button>
+                  </div>
+                </div>
+
+                {/* Method Categories */}
+                <div className="method-categories mt-6">
+                  {Object.entries(methodsByCategory).map(([category, methods]) =>
+                    methods.length > 0 ? (
+                      <div key={category} className="category-section">
+                        <div className="category-header">
+                          <span className="category-icon">
+                            {category.startsWith('1') ? '🔍' : category.startsWith('2') ? '🗂️' : category.startsWith('3') ? '💡' :
+                             category.startsWith('4') ? '🛠️' : category.startsWith('5') ? '✓' : category.startsWith('6') ? '🎨' :
+                             category.startsWith('7') ? '📊' : '🔗'}
+                          </span>
+                          <span>{category}</span>
+                          <span className="category-count">{methods.length}手法</span>
+                        </div>
+                        <div>
+                          {methods.map(method => (
+                            <div key={method.num} className="method-card">
+                              <div className="method-header">
+                                <div className="method-num-badge" style={{
+                                  background: method.num <= 14 ? '#6366f1' : method.num <= 25 ? '#8b5cf6' :
+                                             method.num <= 35 ? '#3b82f6' : method.num <= 43 ? '#0ea5e9' :
+                                             method.num <= 53 ? '#22c55e' : method.num <= 59 ? '#f59e0b' :
+                                             method.num <= 64 ? '#8b5cf6' : '#ec4899'
+                                }}>
+                                  {method.num}
+                                </div>
+                                <div className="method-body">
+                                  <div className="method-name">
+                                    {method.name_jp}
+                                    <span className="method-name-en">{method.name_en}</span>
+                                  </div>
+                                  <div className="method-desc">{method.desc}</div>
+                                  <div className="method-tags">
+                                    {method.tags.map((tag, i) => (
+                                      <span key={i} className={`tag ${getTagClass(tag)}`}>{tag}</span>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* ── Roadmap ── */}
             {view === "roadmap" && (
@@ -629,7 +959,7 @@
 
           {/* Footer */}
           <footer className="mt-8 py-4 text-center text-xs text-gray-400 border-t">
-            HCD資格 学習ロードマップ — 試験の最新情報は各公式サイトで確認してください
+            HCD資格 学習ロードマップ + UX実践ガイド — 試験の最新情報は各公式サイトで確認してください
           </footer>
         </div>
       );
