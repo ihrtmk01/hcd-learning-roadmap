@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HCD資格 学習ロードマップ</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif; background: #f9fafb; color: #111827; -webkit-font-smoothing: antialiased; }
+
+    /* ── Layout ── */
+    .max-w { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    .sticky-header { position: sticky; top: 0; z-index: 30; background: #fff; border-bottom: 1px solid #e5e7eb; }
+    .flex { display: flex; } .flex-1 { flex: 1; } .items-center { align-items: center; }
+    .items-start { align-items: flex-start; } .justify-between { justify-content: space-between; }
+    .flex-wrap { flex-wrap: wrap; } .gap-1 { gap: 4px; } .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; } .gap-4 { gap: 16px; } .shrink-0 { flex-shrink: 0; }
+    .min-w-0 { min-width: 0; } .text-left { text-align: left; } .text-center { text-align: center; }
+    .w-full { width: 100%; } .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* ── Spacing ── */
+    .p-1 { padding: 4px; } .p-3 { padding: 12px; } .p-4 { padding: 16px; }
+    .px-2 { padding-left: 8px; padding-right: 8px; } .px-4 { padding-left: 16px; padding-right: 16px; }
+    .py-05 { padding-top: 2px; padding-bottom: 2px; } .py-2 { padding-top: 8px; padding-bottom: 8px; }
+    .py-3 { padding-top: 12px; padding-bottom: 12px; } .py-4 { padding-top: 16px; padding-bottom: 16px; }
+    .pb-4 { padding-bottom: 16px; } .mt-05 { margin-top: 2px; } .mt-1 { margin-top: 4px; }
+    .mt-3 { margin-top: 12px; } .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; }
+    .mt-8 { margin-top: 32px; } .mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; }
+    .mb-3 { margin-bottom: 12px; } .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; }
+    .space-y-1 > * + * { margin-top: 4px; } .space-y-2 > * + * { margin-top: 8px; }
+    .space-y-3 > * + * { margin-top: 12px; }
+
+    /* ── Typography ── */
+    .text-xs { font-size: 12px; line-height: 1.5; } .text-sm { font-size: 14px; line-height: 1.6; }
+    .text-lg { font-size: 18px; line-height: 1.4; } .text-2xl { font-size: 24px; line-height: 1.2; }
+    .font-medium { font-weight: 500; } .font-semibold { font-weight: 600; } .font-bold { font-weight: 700; }
+    .uppercase { text-transform: uppercase; } .tracking-wider { letter-spacing: 0.05em; }
+    .leading-tight { line-height: 1.3; } .line-through { text-decoration: line-through; }
+    .underline { text-decoration: underline; }
+
+    /* ── Colors ── */
+    .text-white { color: #fff; } .text-gray-400 { color: #9ca3af; } .text-gray-500 { color: #6b7280; }
+    .text-gray-600 { color: #4b5563; } .text-gray-800 { color: #1f2937; } .text-gray-900 { color: #111827; }
+    .bg-white { background: #fff; } .bg-gray-50 { background: #f9fafb; } .bg-gray-100 { background: #f3f4f6; }
+
+    /* ── Borders & Radius ── */
+    .border { border: 1px solid #e5e7eb; } .border-2 { border: 2px solid #e5e7eb; }
+    .border-t { border-top: 1px solid #e5e7eb; } .border-b { border-bottom: 1px solid #e5e7eb; }
+    .border-b-light { border-bottom: 1px solid #f9fafb; }
+    .rounded { border-radius: 4px; } .rounded-md { border-radius: 6px; }
+    .rounded-lg { border-radius: 8px; } .rounded-xl { border-radius: 12px; }
+    .rounded-full { border-radius: 9999px; } .overflow-hidden { overflow: hidden; }
+
+    /* ── Shadows & Transitions ── */
+    .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+    .transition { transition: all .2s ease; }
+
+    /* ── Buttons ── */
+    button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+    button:hover { opacity: .9; }
+    .btn-tab { flex: 1; padding: 8px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: all .2s; }
+    .btn-tab-active { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.05); color: #111827; }
+    .btn-tab-inactive { color: #6b7280; } .btn-tab-inactive:hover { color: #374151; }
+
+    /* ── Badge ── */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-gray { background: #f3f4f6; color: #4b5563; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+
+    /* ── Card ── */
+    .card { background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
+    .card-header { width: 100%; padding: 16px; display: flex; align-items: center; gap: 12px; text-align: left; }
+    .card-header:hover { background: #f9fafb; }
+
+    /* ── Checkbox ── */
+    input[type="checkbox"] { width: 16px; height: 16px; border-radius: 4px; margin-top: 2px; cursor: pointer; }
+
+    /* ── Link card ── */
+    a.link-card { display: block; background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #e5e7eb; text-decoration: none; color: inherit; transition: all .2s; }
+    a.link-card:hover { border-color: #93c5fd; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+
+    /* ── Progress bar ── */
+    .prog-bar { height: 8px; background: #f3f4f6; border-radius: 9999px; overflow: hidden; }
+    .prog-fill { height: 100%; border-radius: 9999px; transition: width .5s ease; }
+
+    /* ── Chevron ── */
+    .chevron { width: 20px; height: 20px; color: #9ca3af; transition: transform .2s; }
+    .chevron-open { transform: rotate(180deg); }
+
+    /* ── Icon box ── */
+    .icon-box { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px; }
+
+    /* ── Dot ── */
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useCallback, useMemo, useEffect } = React;
+
+    // ─── Data ───────────────────────────────────────────────────
+    const TRACKS = {
+      basic: {
+        id: "basic", label: "HCD基礎検定", subtitle: "HCD検\u00AE",
+        description: "人間中心デザインの基礎知識を問う検定試験。年3回実施、50問50分。",
+        color: "#2563eb",
+      },
+      expert: {
+        id: "expert", label: "認定HCD専門家 / スペシャリスト", subtitle: "HCD-Net認定",
+        description: "実務経験に基づくコンピタンス審査。スペシャリスト(2年〜)、専門家(5年〜)。",
+        color: "#7c3aed",
+      },
+    };
+
+    const BASIC_MODULES = [
+      { id:"b1", category:"理念", title:"人間中心デザインの理念と基本プロセス", icon:"💡", estimatedHours:6, topics:[
+        {name:"利用者視点",desc:"ユーザーの立場から設計を考える基本姿勢"},
+        {name:"共創",desc:"多様なステークホルダーとの協働によるデザイン"},
+        {name:"新しい価値の創造",desc:"既存の枠を超えた価値提案"},
+        {name:"問題の設定（発見）",desc:"正しい問題を見つけるプロセス"},
+        {name:"解決策の探求（創造）",desc:"アイデア発想と具現化"},
+        {name:"繰り返し（イテレーション）",desc:"反復的な改善プロセス"},
+        {name:"プロセスと手法",desc:"HCDの代表的なメソッド体系"},
+        {name:"マインドセット",desc:"HCD実践者に求められる心構え"},
+        {name:"ISO 9241-210",desc:"人間中心設計の国際規格"},
+        {name:"デザイン経営",desc:"経営にデザイン思考を取り入れる考え方"},
+      ]},
+      { id:"b2", category:"理念", title:"HCD実践者のマインドセットと倫理", icon:"🧭", estimatedHours:4, topics:[
+        {name:"相手の立場に立って考える",desc:"共感力・エンパシーの基本"},
+        {name:"人を思いやること",desc:"倫理的配慮とケアの視点"},
+        {name:"当事者意識",desc:"自分ごととして捉える姿勢"},
+        {name:"HCD専門家倫理規範",desc:"専門家として守るべき倫理基準"},
+        {name:"人間中心AI",desc:"AI設計における人間中心の原則"},
+        {name:"ダークパターン",desc:"ユーザーを欺くUIパターンの理解と回避"},
+      ]},
+      { id:"b3", category:"計画", title:"HCDプロセスの計画", icon:"📋", estimatedHours:8, topics:[
+        {name:"HCDプロセスモデル",desc:"ISO 9241-210に基づくプロセスフロー"},
+        {name:"利用状況の理解と明示",desc:"ユーザー・タスク・環境の把握"},
+        {name:"要求事項の明示",desc:"ユーザーニーズの要件化"},
+        {name:"設計による解決策の作成",desc:"プロトタイピングと具現化"},
+        {name:"評価",desc:"ユーザビリティ評価の計画"},
+        {name:"プロジェクト計画への統合",desc:"開発プロセスへのHCD組み込み"},
+      ]},
+      { id:"b4", category:"基本知識", title:"ユーザビリティ", icon:"🎯", estimatedHours:8, topics:[
+        {name:"ISO 9241-11 (JIS Z 8521)",desc:"ユーザビリティの国際規格定義"},
+        {name:"ユーザー",desc:"利用者の定義と特性"},
+        {name:"利用状況",desc:"使用環境・コンテキストの理解"},
+        {name:"有効さ（効果）",desc:"目標達成の正確さ・完全さ"},
+        {name:"効率",desc:"目標達成に要するリソース"},
+        {name:"満足度",desc:"ユーザーの主観的評価"},
+        {name:"製品品質と利用時品質",desc:"品質モデルの多層構造"},
+      ]},
+      { id:"b5", category:"基本知識", title:"アクセシビリティ", icon:"♿", estimatedHours:6, topics:[
+        {name:"ウェブアクセシビリティ",desc:"WCAG基準とWebのバリアフリー"},
+        {name:"ユニバーサルデザイン",desc:"すべての人が使えるデザイン原則"},
+        {name:"インクルーシブデザイン",desc:"排除される人を含めた包括的設計"},
+        {name:"DE&I",desc:"ダイバーシティ・エクイティ＆インクルージョン"},
+        {name:"支援技術",desc:"スクリーンリーダー等の補助技術"},
+      ]},
+      { id:"b6", category:"基本知識", title:"人間の特性", icon:"🧠", estimatedHours:8, topics:[
+        {name:"認知特性",desc:"記憶・注意・知覚の基本モデル"},
+        {name:"身体的特性",desc:"人体計測・運動機能の理解"},
+        {name:"メンタルモデル",desc:"ユーザーの内的表象と予測"},
+        {name:"アフォーダンス",desc:"行為の可能性を示すデザイン"},
+        {name:"認知負荷",desc:"情報処理の限界と軽減策"},
+        {name:"ヒューマンエラー",desc:"エラーの分類と防止設計"},
+      ]},
+      { id:"b7", category:"基本知識", title:"情報デザイン", icon:"📐", estimatedHours:6, topics:[
+        {name:"情報アーキテクチャ（IA）",desc:"情報の構造化と組織化"},
+        {name:"ナビゲーション設計",desc:"ユーザーの移動と探索の支援"},
+        {name:"ビジュアルデザイン原則",desc:"視覚的階層・一貫性・近接"},
+        {name:"インタラクションデザイン",desc:"操作と応答のデザイン"},
+      ]},
+      { id:"b8", category:"基本知識", title:"UXライティング / テクニカルライティング", icon:"✏️", estimatedHours:4, topics:[
+        {name:"テクニカルライティング",desc:"技術文書の書き方の基本"},
+        {name:"使用説明",desc:"マニュアル・ガイドの設計"},
+        {name:"UXライティング",desc:"UIテキストの設計原則"},
+        {name:"マイクロコピー",desc:"ボタン・エラー文等の短いUI文言"},
+        {name:"著作権",desc:"コンテンツの権利保護"},
+      ]},
+      { id:"b9", category:"手法", title:"調査・分析手法", icon:"🔍", estimatedHours:10, topics:[
+        {name:"ユーザーインタビュー",desc:"半構造化インタビューの計画と実施"},
+        {name:"コンテキスチュアル・インクワイアリー",desc:"現場観察と文脈的質問"},
+        {name:"ペルソナ",desc:"典型的ユーザー像の作成"},
+        {name:"カスタマージャーニーマップ",desc:"体験全体の可視化"},
+        {name:"タスク分析",desc:"ユーザーの行動と目標の構造化"},
+        {name:"アンケート調査",desc:"定量的なユーザー調査手法"},
+      ]},
+      { id:"b10", category:"手法", title:"評価手法", icon:"✅", estimatedHours:8, topics:[
+        {name:"ユーザビリティテスト",desc:"実ユーザーによる操作テスト"},
+        {name:"ヒューリスティック評価",desc:"専門家による経験則ベースの評価"},
+        {name:"認知的ウォークスルー",desc:"ユーザー視点での操作手順検証"},
+        {name:"SUS（System Usability Scale）",desc:"標準化されたユーザビリティ尺度"},
+        {name:"A/Bテスト",desc:"比較実験による効果検証"},
+      ]},
+      { id:"b11", category:"応用", title:"応用領域と社会実装", icon:"🌍", estimatedHours:4, topics:[
+        {name:"DX（デジタルトランスフォーメーション）",desc:"デジタル技術による変革とHCD"},
+        {name:"Society 5.0",desc:"超スマート社会における人間中心の視点"},
+        {name:"ソーシャルイノベーション",desc:"社会課題解決への応用"},
+        {name:"サーキュラーエコノミー",desc:"循環型経済とサステナブルデザイン"},
+        {name:"行政・医療・教育への活用",desc:"公共サービスにおけるHCD実践"},
+      ]},
+    ];
+
+    const EXPERT_MODULES = [
+      { id:"e1", category:"Aコンピタンス（基本スキル）", title:"A1: 調査・評価設計能力", icon:"📊", estimatedHours:20, topics:[
+        {name:"調査計画の策定",desc:"適切な調査手法の選定と計画立案"},
+        {name:"評価計画の策定",desc:"ユーザビリティ評価の設計"},
+        {name:"倫理的配慮",desc:"調査における倫理審査と同意取得"},
+      ]},
+      { id:"e2", category:"Aコンピタンス（基本スキル）", title:"A2: ユーザー調査実施能力", icon:"👥", estimatedHours:20, topics:[
+        {name:"インタビュー実施",desc:"深層インタビューのファシリテーション"},
+        {name:"観察調査",desc:"エスノグラフィー・フィールドワーク"},
+        {name:"データ収集と記録",desc:"調査データの正確な記録方法"},
+      ]},
+      { id:"e3", category:"Aコンピタンス（基本スキル）", title:"A3: ユーザー調査分析能力", icon:"📈", estimatedHours:20, topics:[
+        {name:"定性データ分析",desc:"KJ法・親和図法等による分析"},
+        {name:"モデル化",desc:"ペルソナ・シナリオ・ジャーニーマップの作成"},
+        {name:"インサイト導出",desc:"データからの本質的な気づきの抽出"},
+      ]},
+      { id:"e4", category:"Aコンピタンス（基本スキル）", title:"A4〜A7: 具現化・設計能力", icon:"🎨", estimatedHours:30, topics:[
+        {name:"要求仕様の作成",desc:"ユーザー要求の文書化"},
+        {name:"情報アーキテクチャ設計",desc:"構造・ナビゲーション・ラベリング"},
+        {name:"インタラクション設計",desc:"操作フローとフィードバック設計"},
+        {name:"プロトタイピング",desc:"Lo-Fi〜Hi-Fiプロトタイプの作成"},
+      ]},
+      { id:"e5", category:"Aコンピタンス（基本スキル）", title:"A8〜A13: 評価・検証能力", icon:"🧪", estimatedHours:30, topics:[
+        {name:"ユーザビリティテスト実施",desc:"テスト設計・リクルーティング・実施"},
+        {name:"専門家評価",desc:"ヒューリスティック・認知的ウォークスルー"},
+        {name:"分析とレポーティング",desc:"評価結果の整理と改善提案"},
+        {name:"アクセシビリティ評価",desc:"WCAG準拠の検証"},
+      ]},
+      { id:"e6", category:"Bコンピタンス（マネジメント）", title:"B1〜B3: プロジェクトマネジメント", icon:"🗂️", estimatedHours:25, topics:[
+        {name:"HCDプロジェクト計画",desc:"工程・リソース・スケジュール管理"},
+        {name:"ステークホルダー管理",desc:"関係者との合意形成と調整"},
+        {name:"品質管理",desc:"成果物の品質基準と管理"},
+      ]},
+      { id:"e7", category:"Cコンピタンス（組織推進）", title:"C1〜C4: 組織導入・推進力", icon:"🏢", estimatedHours:25, topics:[
+        {name:"HCD組織導入",desc:"組織へのHCDプロセス定着化"},
+        {name:"教育・啓発",desc:"メンバーへのHCD研修・支援"},
+        {name:"成熟度モデル",desc:"組織のHCD成熟度の評価と向上"},
+        {name:"経営層への提案",desc:"HCDの事業価値の説明と提案"},
+      ]},
+      { id:"e8", category:"審査対策", title:"実践事例の整理と記述", icon:"📝", estimatedHours:40, topics:[
+        {name:"プロジェクト選定（3件以上）",desc:"コンピタンスを網羅できる事例を選ぶ"},
+        {name:"コンピタンス記述書作成",desc:"各事例で6項目以上のコンピタンスを記述"},
+        {name:"プロジェクト内容記述",desc:"背景・課題・プロセス・成果の構造化"},
+        {name:"レビューと推敲",desc:"第三者レビューによる記述の改善"},
+      ]},
+    ];
+
+    const RESOURCES = {
+      basic: [
+        {name:"HCD基礎検定 公式サイト", url:"https://hcs-cc.org/hcd/", type:"公式"},
+        {name:"HCDの基礎知識体系報告書", url:"https://www.hcdnet.org/", type:"テキスト"},
+        {name:"ISO 9241-210 解説記事", url:"#", type:"参考"},
+        {name:"誰のためのデザイン？（D.A.ノーマン）", url:"#", type:"推薦図書"},
+      ],
+      expert: [
+        {name:"HCD-Net 認定制度 公式", url:"https://www.hcdnet.org/certified/", type:"公式"},
+        {name:"コンピタンスマップ 2025年度", url:"https://www.hcdnet.org/archives/005/202511/", type:"公式"},
+        {name:"合格者の体験記", url:"#", type:"参考"},
+        {name:"HCDライブラリー", url:"#", type:"推薦図書"},
+      ],
+    };
+
+    const STORAGE_KEY = "hcd-roadmap-progress";
+
+    // ─── Helper: ProgressRing ───────────────────────────────────
+    function ProgressRing({ percent, size = 48, stroke = 4, color = "#2563eb" }) {
+      const r = (size - stroke) / 2;
+      const circ = 2 * Math.PI * r;
+      const offset = circ - (percent / 100) * circ;
+      return (
+        <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#e5e7eb" strokeWidth={stroke} />
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
+            strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+            style={{ transition: "stroke-dashoffset 0.5s ease" }} />
+          <text x={size/2} y={size/2} textAnchor="middle" dominantBaseline="central"
+            style={{ transform:"rotate(90deg)", transformOrigin:"center", fontSize:size*0.26, fontWeight:700, fill:"#374151" }}>
+            {percent}%
+          </text>
+        </svg>
+      );
+    }
+
+    // ─── Helper: Badge ──────────────────────────────────────────
+    function Badge({ children, variant = "gray" }) {
+      return <span className={`badge badge-${variant}`}>{children}</span>;
+    }
+
+    // ─── Helper: Chevron SVG ────────────────────────────────────
+    function Chevron({ open }) {
+      return (
+        <svg className={`chevron${open ? " chevron-open" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      );
+    }
+
+    function ExternalIcon() {
+      return (
+        <svg style={{width:20,height:20,color:"#d1d5db",flexShrink:0}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      );
+    }
+
+    // ─── Main App ───────────────────────────────────────────────
+    function App() {
+      const [activeTrack, setActiveTrack] = useState("basic");
+      const [completed, setCompleted] = useState(() => {
+        try { const s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : {}; } catch { return {}; }
+      });
+      const [expandedModule, setExpandedModule] = useState(null);
+      const [view, setView] = useState("roadmap");
+
+      useEffect(() => {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(completed)); } catch {}
+      }, [completed]);
+
+      const modules = activeTrack === "basic" ? BASIC_MODULES : EXPERT_MODULES;
+      const track = TRACKS[activeTrack];
+
+      const toggleTopic = useCallback((moduleId, topicIdx) => {
+        setCompleted(prev => {
+          const key = `${moduleId}-${topicIdx}`;
+          const next = { ...prev };
+          if (next[key]) delete next[key]; else next[key] = true;
+          return next;
+        });
+      }, []);
+
+      const moduleProgress = useCallback(mod => {
+        const total = mod.topics.length;
+        const done = mod.topics.filter((_,i) => completed[`${mod.id}-${i}`]).length;
+        return { total, done, pct: total ? Math.round(done/total*100) : 0 };
+      }, [completed]);
+
+      const overallProgress = useMemo(() => {
+        const total = modules.reduce((s,m) => s + m.topics.length, 0);
+        const done = modules.reduce((s,m) => s + m.topics.filter((_,i) => completed[`${m.id}-${i}`]).length, 0);
+        return { total, done, pct: total ? Math.round(done/total*100) : 0 };
+      }, [modules, completed]);
+
+      const totalHours = useMemo(() => modules.reduce((s,m) => s + m.estimatedHours, 0), [modules]);
+      const completedHours = useMemo(() =>
+        modules.reduce((s,m) => { const p = moduleProgress(m); return s + (p.total ? p.done/p.total*m.estimatedHours : 0); }, 0),
+      [modules, moduleProgress]);
+
+      const resetProgress = () => {
+        const prefix = activeTrack === "basic" ? "b" : "e";
+        setCompleted(prev => {
+          const next = {};
+          for (const [k,v] of Object.entries(prev)) { if (!k.startsWith(prefix)) next[k] = v; }
+          return next;
+        });
+      };
+
+      const categories = useMemo(() => {
+        const cats = []; let last = "";
+        modules.forEach(m => { if (m.category !== last) { cats.push(m.category); last = m.category; } });
+        return cats;
+      }, [modules]);
+
+      // ── Timeline data ──
+      const basicTimeline = [
+        {week:"Week 1-2",label:"理念とマインドセット",modules:["b1","b2"],color:"#2563eb"},
+        {week:"Week 3-4",label:"HCDプロセスの計画",modules:["b3"],color:"#2563eb"},
+        {week:"Week 5-6",label:"ユーザビリティ & アクセシビリティ",modules:["b4","b5"],color:"#3b82f6"},
+        {week:"Week 7-8",label:"人間の特性 & 情報デザイン",modules:["b6","b7"],color:"#3b82f6"},
+        {week:"Week 9",label:"UXライティング",modules:["b8"],color:"#60a5fa"},
+        {week:"Week 10",label:"調査・分析手法",modules:["b9"],color:"#60a5fa"},
+        {week:"Week 11",label:"評価手法 & 応用領域",modules:["b10","b11"],color:"#93c5fd"},
+        {week:"Week 12",label:"総復習 & 模擬テスト",modules:[],color:"#16a34a"},
+      ];
+      const expertTimeline = [
+        {month:"Month 1",label:"コンピタンスマップ理解 & 事例選定",modules:["e1"],color:"#7c3aed"},
+        {month:"Month 2",label:"調査系コンピタンスの整理",modules:["e2","e3"],color:"#7c3aed"},
+        {month:"Month 3",label:"設計・具現化の事例記述",modules:["e4"],color:"#8b5cf6"},
+        {month:"Month 4",label:"評価・検証の事例記述",modules:["e5"],color:"#8b5cf6"},
+        {month:"Month 5",label:"マネジメント & 組織推進",modules:["e6","e7"],color:"#a78bfa"},
+        {month:"Month 6",label:"記述書の推敲 & 提出準備",modules:["e8"],color:"#16a34a"},
+      ];
+
+      function phasePercent(phaseModuleIds) {
+        const pm = modules.filter(m => phaseModuleIds.includes(m.id));
+        const t = pm.reduce((s,m) => s + m.topics.length, 0);
+        const d = pm.reduce((s,m) => s + m.topics.filter((_,j) => completed[`${m.id}-${j}`]).length, 0);
+        return t ? Math.round(d/t*100) : 0;
+      }
+
+      return (
+        <div style={{minHeight:"100vh"}} className="bg-gray-50">
+          {/* Header */}
+          <header className="sticky-header">
+            <div className="max-w" style={{padding:"12px 16px"}}>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="icon-box" style={{background:track.color}}>HCD</div>
+                  <div>
+                    <h1 className="text-lg font-bold text-gray-900">HCD資格 学習ロードマップ</h1>
+                    <p className="text-xs text-gray-500">UI/UXデザイナー・UX実務者のための学習支援ツール</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ProgressRing percent={overallProgress.pct} size={44} color={track.color} />
+                  <div className="text-xs text-gray-500 leading-tight">
+                    {overallProgress.done}/{overallProgress.total} 項目<br/>
+                    約{Math.round(completedHours)}h / {totalHours}h
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div className="max-w py-4">
+            {/* Track Switcher */}
+            <div className="flex gap-2 mb-4">
+              {Object.values(TRACKS).map(t => (
+                <button key={t.id} onClick={() => { setActiveTrack(t.id); setExpandedModule(null); }}
+                  className="flex-1 rounded-xl p-3 text-left border-2 transition"
+                  style={activeTrack === t.id
+                    ? {borderColor:t.color, background:`${t.color}08`}
+                    : {borderColor:"#e5e7eb", background:"#fff"}}>
+                  <div className="font-bold text-sm" style={{color: activeTrack===t.id ? t.color : "#374151"}}>{t.label}</div>
+                  <div className="text-xs text-gray-500 mt-05">{t.subtitle}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* Description */}
+            <div className="card p-4 mb-4">
+              <p className="text-sm text-gray-600">{track.description}</p>
+              <div className="flex gap-4 mt-3">
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{color:track.color}}>{modules.length}</div>
+                  <div className="text-xs text-gray-500">学習モジュール</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{color:track.color}}>{totalHours}h</div>
+                  <div className="text-xs text-gray-500">想定学習時間</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold" style={{color:track.color}}>
+                    {modules.reduce((s,m) => s + m.topics.length, 0)}
+                  </div>
+                  <div className="text-xs text-gray-500">学習項目</div>
+                </div>
+              </div>
+            </div>
+
+            {/* View Tabs */}
+            <div className="flex gap-1 mb-4 rounded-lg p-1 bg-gray-100">
+              {[{id:"roadmap",label:"ロードマップ"},{id:"resources",label:"参考リソース"},{id:"timeline",label:"学習計画"}].map(v => (
+                <button key={v.id} onClick={() => setView(v.id)}
+                  className={`btn-tab ${view===v.id ? "btn-tab-active" : "btn-tab-inactive"}`}>
+                  {v.label}
+                </button>
+              ))}
+            </div>
+
+            {/* ── Roadmap ── */}
+            {view === "roadmap" && (
+              <div>
+                {categories.map(cat => (
+                  <div key={cat} className="mb-6">
+                    <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="dot" style={{background:track.color}} />
+                      {cat}
+                    </h2>
+                    <div className="space-y-2">
+                      {modules.filter(m => m.category === cat).map(mod => {
+                        const prog = moduleProgress(mod);
+                        const isOpen = expandedModule === mod.id;
+                        return (
+                          <div key={mod.id} className="card">
+                            <button className="card-header" onClick={() => setExpandedModule(isOpen ? null : mod.id)}>
+                              <span style={{fontSize:24}}>{mod.icon}</span>
+                              <div className="flex-1 min-w-0">
+                                <div className="font-semibold text-sm text-gray-900 truncate">{mod.title}</div>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <Badge variant={prog.pct===100?"green":prog.pct>0?"amber":"gray"}>{prog.done}/{prog.total}</Badge>
+                                  <span className="text-xs text-gray-400">約{mod.estimatedHours}時間</span>
+                                </div>
+                              </div>
+                              <ProgressRing percent={prog.pct} size={40} stroke={3} color={prog.pct===100?"#16a34a":track.color} />
+                              <Chevron open={isOpen} />
+                            </button>
+                            {isOpen && (
+                              <div style={{borderTop:"1px solid #f3f4f6",padding:"0 16px 16px"}}>
+                                {mod.topics.map((topic,i) => {
+                                  const key = `${mod.id}-${i}`;
+                                  const isDone = !!completed[key];
+                                  return (
+                                    <label key={i} className="flex items-start gap-3 py-3 border-b-light"
+                                      style={{cursor:"pointer",opacity:isDone?0.6:1}}>
+                                      <input type="checkbox" checked={isDone} onChange={() => toggleTopic(mod.id,i)}
+                                        style={{accentColor:track.color}} />
+                                      <div className="flex-1">
+                                        <div className={`text-sm font-medium ${isDone?"line-through text-gray-400":"text-gray-800"}`}>{topic.name}</div>
+                                        <div className="text-xs text-gray-500 mt-05">{topic.desc}</div>
+                                      </div>
+                                    </label>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+                <div className="mt-4 text-center">
+                  <button onClick={resetProgress} className="text-xs text-gray-400 underline transition"
+                    style={{cursor:"pointer"}}
+                    onMouseEnter={e => e.target.style.color="#ef4444"}
+                    onMouseLeave={e => e.target.style.color="#9ca3af"}>
+                    このトラックの進捗をリセット
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* ── Resources ── */}
+            {view === "resources" && (
+              <div className="space-y-3">
+                <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">推奨リソース — {track.label}</h2>
+                {RESOURCES[activeTrack].map((res,i) => (
+                  <a key={i} href={res.url} target="_blank" rel="noopener noreferrer" className="link-card">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold text-sm text-gray-900">{res.name}</div>
+                        <Badge variant={res.type==="公式"?"blue":res.type==="推薦図書"?"purple":"gray"}>{res.type}</Badge>
+                      </div>
+                      <ExternalIcon />
+                    </div>
+                  </a>
+                ))}
+                <div className="card p-4 mt-6">
+                  <h3 className="font-bold text-sm text-gray-900 mb-2">
+                    {activeTrack==="basic" ? "試験概要" : "審査概要"}
+                  </h3>
+                  {activeTrack === "basic" ? (
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <p>形式: CBT（50問 / 50分）</p>
+                      <p>実施: 年3回（2月・6月・10月予定）</p>
+                      <p>主催: 一般社団法人 人間中心社会共創機構</p>
+                      <p>範囲: HCD基礎知識体系報告書に準拠</p>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <p>形式: 書類審査（コンピタンス記述書）</p>
+                      <p>実施: 年1回（秋頃募集）</p>
+                      <p>主催: NPO法人 人間中心設計推進機構（HCD-Net）</p>
+                      <p>要件: 実践事例3件以上、各6コンピタンス以上を記述</p>
+                      <p>スペシャリスト: 実務2年〜 / 専門家: 実務5年〜</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ── Timeline ── */}
+            {view === "timeline" && (
+              <div>
+                <div className="card p-4 mb-4">
+                  <h3 className="font-bold text-sm text-gray-900 mb-3">
+                    {activeTrack==="basic" ? "推奨学習スケジュール（12週間プラン）" : "推奨準備スケジュール（6ヶ月プラン）"}
+                  </h3>
+                  <div className="space-y-3">
+                    {(activeTrack === "basic" ? basicTimeline : expertTimeline).map((phase,i) => {
+                      const pct = phasePercent(phase.modules);
+                      return (
+                        <div key={i} className="flex items-center gap-3">
+                          <div style={{width:80}} className="text-xs font-bold text-gray-500 shrink-0">{phase.week || phase.month}</div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-sm font-medium text-gray-800">{phase.label}</span>
+                              {phase.modules.length > 0 && <span className="text-xs text-gray-400">{pct}%</span>}
+                            </div>
+                            <div className="prog-bar">
+                              <div className="prog-fill" style={{width:`${pct}%`,background:phase.color}} />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="card p-4">
+                  <h3 className="font-bold text-sm text-gray-900 mb-2">学習のコツ</h3>
+                  {activeTrack === "basic" ? (
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <p>1. ISO規格の「定義」を正確に覚える（特にISO 9241-11, 9241-210）</p>
+                      <p>2. 各手法の「目的」と「使いどころ」をセットで理解する</p>
+                      <p>3. ダークパターンやDE&I等の新しいテーマにも注目</p>
+                      <p>4. 過去問や模擬問題で本番形式に慣れる</p>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <p>1. コンピタンスマップを熟読し、各項目の意図を深く理解する</p>
+                      <p>2. 1事例で6コンピタンス以上をカバーできるプロジェクトを選ぶ</p>
+                      <p>3. 「なぜその手法を選んだか」の根拠を明確に書く</p>
+                      <p>4. 合格者のレビュー会に参加し、フィードバックを受ける</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Footer */}
+          <footer className="mt-8 py-4 text-center text-xs text-gray-400 border-t">
+            HCD資格 学習ロードマップ — 試験の最新情報は各公式サイトで確認してください
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
